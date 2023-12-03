@@ -1,0 +1,48 @@
+[2.036s] Invoking command in '/home/ros2/Desktop/trabalho/ros2_ws/src/ros2_flatland_rl_tutorial': PYTHONPATH=/home/ros2/Desktop/trabalho/ros2_ws/build/serp_rl/prefix_override:/home/ros2/Desktop/trabalho/ros2_ws/install/serp_rl/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../../build/serp_rl build --build-base /home/ros2/Desktop/trabalho/ros2_ws/build/serp_rl/build install --record /home/ros2/Desktop/trabalho/ros2_ws/build/serp_rl/install.log --single-version-externally-managed
+[2.547s] running egg_info
+[2.550s] creating ../../build/serp_rl/serp_rl.egg-info
+[2.550s] writing ../../build/serp_rl/serp_rl.egg-info/PKG-INFO
+[2.551s] writing dependency_links to ../../build/serp_rl/serp_rl.egg-info/dependency_links.txt
+[2.552s] writing entry points to ../../build/serp_rl/serp_rl.egg-info/entry_points.txt
+[2.552s] writing requirements to ../../build/serp_rl/serp_rl.egg-info/requires.txt
+[2.553s] writing top-level names to ../../build/serp_rl/serp_rl.egg-info/top_level.txt
+[2.553s] writing manifest file '../../build/serp_rl/serp_rl.egg-info/SOURCES.txt'
+[2.558s] reading manifest file '../../build/serp_rl/serp_rl.egg-info/SOURCES.txt'
+[2.559s] writing manifest file '../../build/serp_rl/serp_rl.egg-info/SOURCES.txt'
+[2.560s] running build
+[2.560s] running build_py
+[2.566s] /usr/lib/python3/dist-packages/setuptools/command/install.py:34: SetuptoolsDeprecationWarning: setup.py install is deprecated. Use build and pip and other standards-based tools.
+[2.566s]   warnings.warn(
+[2.567s] creating /home/ros2/Desktop/trabalho/ros2_ws/build/serp_rl/build
+[2.567s] creating /home/ros2/Desktop/trabalho/ros2_ws/build/serp_rl/build/lib
+[2.567s] creating /home/ros2/Desktop/trabalho/ros2_ws/build/serp_rl/build/lib/serp_rl
+[2.567s] copying serp_rl/__init__.py -> /home/ros2/Desktop/trabalho/ros2_ws/build/serp_rl/build/lib/serp_rl
+[2.568s] running install
+[2.568s] running install_lib
+[2.575s] creating /home/ros2/Desktop/trabalho/ros2_ws/install/serp_rl/lib/python3.10/site-packages/serp_rl
+[2.575s] copying /home/ros2/Desktop/trabalho/ros2_ws/build/serp_rl/build/lib/serp_rl/__init__.py -> /home/ros2/Desktop/trabalho/ros2_ws/install/serp_rl/lib/python3.10/site-packages/serp_rl
+[2.581s] byte-compiling /home/ros2/Desktop/trabalho/ros2_ws/install/serp_rl/lib/python3.10/site-packages/serp_rl/__init__.py to __init__.cpython-310.pyc
+[2.582s] running install_data
+[2.582s] copying package.xml -> /home/ros2/Desktop/trabalho/ros2_ws/install/serp_rl/share/serp_rl
+[2.582s] creating /home/ros2/Desktop/trabalho/ros2_ws/install/serp_rl/share/serp_rl/launch
+[2.583s] copying launch/serp_rl.launch.py -> /home/ros2/Desktop/trabalho/ros2_ws/install/serp_rl/share/serp_rl/launch/
+[2.583s] creating /home/ros2/Desktop/trabalho/ros2_ws/install/serp_rl/share/serp_rl/rviz
+[2.583s] copying rviz/robot_navigation.rviz -> /home/ros2/Desktop/trabalho/ros2_ws/install/serp_rl/share/serp_rl/rviz/
+[2.583s] creating /home/ros2/Desktop/trabalho/ros2_ws/install/serp_rl/share/serp_rl/world
+[2.583s] copying world/turn.png -> /home/ros2/Desktop/trabalho/ros2_ws/install/serp_rl/share/serp_rl/world/
+[2.583s] copying world/turn.yaml -> /home/ros2/Desktop/trabalho/ros2_ws/install/serp_rl/share/serp_rl/world/
+[2.584s] copying world/empty.yaml -> /home/ros2/Desktop/trabalho/ros2_ws/install/serp_rl/share/serp_rl/world/
+[2.585s] copying world/end_beacon.model.yaml -> /home/ros2/Desktop/trabalho/ros2_ws/install/serp_rl/share/serp_rl/world/
+[2.585s] copying world/empty.png -> /home/ros2/Desktop/trabalho/ros2_ws/install/serp_rl/share/serp_rl/world/
+[2.586s] copying world/serp.model.yaml -> /home/ros2/Desktop/trabalho/ros2_ws/install/serp_rl/share/serp_rl/world/
+[2.586s] copying world/world.yaml -> /home/ros2/Desktop/trabalho/ros2_ws/install/serp_rl/share/serp_rl/world/
+[2.587s] creating /home/ros2/Desktop/trabalho/ros2_ws/install/serp_rl/share/ament_index
+[2.587s] creating /home/ros2/Desktop/trabalho/ros2_ws/install/serp_rl/share/ament_index/resource_index
+[2.587s] creating /home/ros2/Desktop/trabalho/ros2_ws/install/serp_rl/share/ament_index/resource_index/packages
+[2.588s] copying resource/serp_rl -> /home/ros2/Desktop/trabalho/ros2_ws/install/serp_rl/share/ament_index/resource_index/packages
+[2.588s] running install_egg_info
+[2.594s] Copying ../../build/serp_rl/serp_rl.egg-info to /home/ros2/Desktop/trabalho/ros2_ws/install/serp_rl/lib/python3.10/site-packages/serp_rl-0.0.0-py3.10.egg-info
+[2.596s] running install_scripts
+[2.641s] Installing serp_rl script to /home/ros2/Desktop/trabalho/ros2_ws/install/serp_rl/lib/serp_rl
+[2.644s] writing list of installed files to '/home/ros2/Desktop/trabalho/ros2_ws/build/serp_rl/install.log'
+[2.718s] Invoked command in '/home/ros2/Desktop/trabalho/ros2_ws/src/ros2_flatland_rl_tutorial' returned '0': PYTHONPATH=/home/ros2/Desktop/trabalho/ros2_ws/build/serp_rl/prefix_override:/home/ros2/Desktop/trabalho/ros2_ws/install/serp_rl/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../../build/serp_rl build --build-base /home/ros2/Desktop/trabalho/ros2_ws/build/serp_rl/build install --record /home/ros2/Desktop/trabalho/ros2_ws/build/serp_rl/install.log --single-version-externally-managed

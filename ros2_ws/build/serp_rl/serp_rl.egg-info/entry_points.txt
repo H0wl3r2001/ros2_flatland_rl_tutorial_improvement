@@ -1,0 +1,3 @@
+[console_scripts]
+serp_rl = serp_rl.__init__:main
+

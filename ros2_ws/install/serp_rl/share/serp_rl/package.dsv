@@ -1,0 +1,6 @@
+source;share/serp_rl/hook/pythonpath.ps1
+source;share/serp_rl/hook/pythonpath.dsv
+source;share/serp_rl/hook/pythonpath.sh
+source;share/serp_rl/hook/ament_prefix_path.ps1
+source;share/serp_rl/hook/ament_prefix_path.dsv
+source;share/serp_rl/hook/ament_prefix_path.sh
