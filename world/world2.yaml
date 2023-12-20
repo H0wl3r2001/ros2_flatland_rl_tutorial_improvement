@@ -4,7 +4,7 @@ layers:
   - 1.0
   - 1.0
   - 1
-  map: turn.yaml
+  map: complex_turn.yaml
   name:
   - collisions_layer
   - serp_laser_layer
@@ -27,7 +27,7 @@ models:
 - model: end_beacon.model.yaml
   name: end_beacon
   pose:
-  - 1.6
-  - 1.6
+  - 3.4
+  - 3.5
   - 0.0
 properties: {}

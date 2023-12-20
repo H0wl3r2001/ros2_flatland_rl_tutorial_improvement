@@ -6,6 +6,7 @@ from geometry_msgs.msg import Twist, Pose2D
 from sensor_msgs.msg import LaserScan
 from flatland_msgs.srv import MoveModel
 from flatland_msgs.msg import Collisions
+from rcl_interfaces.msg import Parameter
 
 from gym import Env
 from gym.spaces import Discrete, Box
@@ -16,6 +17,10 @@ from stable_baselines3.common.env_checker import check_env
 import numpy as np
 import time
 import threading
+
+import yaml
+import math
+
 
 class SerpControllerEnv(Node, Env):
     def __init__(self) -> None:
@@ -43,8 +48,18 @@ class SerpControllerEnv(Node, Env):
         # true if a collision happens
         self.collision = False
 
+        with open(self._parameter_overrides['world_path']._value, 'r') as file:
+            data = yaml.load(file, Loader=yaml.FullLoader)
+
+        world_type = data['layers'][0]['map']
+
+        if world_type == 'turn.yaml':
+            data['models'][1]['pose'][2] = 3.14159265359
+        else:
+           data['models'][1]['pose'][2] = 4.71238898038
+
         # Possible starting positions
-        self.start_positions = [(0.0, 0.0, 1.57079632679), (1.6, 1.6, 3.14159265359)]
+        self.start_positions = [(0.0, 0.0, 1.57079632679), tuple(data['models'][1]['pose'])]
         # Current position
         self.position = 0
 
@@ -289,7 +304,7 @@ class SerpControllerEnv(Node, Env):
         agent.save("src/ros2_flatland_rl_tutorial/ppo")
 
 def main(args = None):
-    rclpy.init()
+    rclpy.init(args = args)
     
     serp = SerpControllerEnv()
 
