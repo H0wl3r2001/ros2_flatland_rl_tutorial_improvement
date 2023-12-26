@@ -38,18 +38,20 @@ class SerpControllerEnv(Node, Env):
         # How close the robot needs to be to the target to finish the task
         self.end_range = 0.2
 
-        # Number of divisions of the LiDAR
+        with open(self._parameter_overrides['world_path']._value, 'r') as file:
+            data = yaml.load(file, Loader=yaml.FullLoader)
+
         self.n_lidar_sections = 9
+
+        # Number of divisions of the LiDAR
+        if data['models'][0]['model'] == 'serp_sonar.model.yaml':
+            self.n_lidar_sections = 3
+        print(self.n_lidar_sections)
         self.lidar_sample = []
 
         # Variables that track a possible end state
-        # current distance to target
-        self.distance_to_end = 10.0
         # true if a collision happens
         self.collision = False
-
-        with open(self._parameter_overrides['world_path']._value, 'r') as file:
-            data = yaml.load(file, Loader=yaml.FullLoader)
 
         world_type = data['layers'][0]['map']
 
@@ -57,6 +59,14 @@ class SerpControllerEnv(Node, Env):
             data['models'][1]['pose'][2] = 3.14159265359
         else:
            data['models'][1]['pose'][2] = 4.71238898038
+
+        start_point = (0.0, 0.0, 1.57079632679)
+        beacon_point = tuple(data['models'][1]['pose'])
+
+        # current distance to target
+        #self.distance_to_end_calc = math.sqrt((beacon_point[0] - start_point[0])**2 + (beacon_point[1] - start_point[1])**2)
+        self.distance_to_end = 10
+        #print(self.distance_to_end)
 
         # Possible starting positions
         self.start_positions = [(0.0, 0.0, 1.57079632679), tuple(data['models'][1]['pose'])]
@@ -125,7 +135,7 @@ class SerpControllerEnv(Node, Env):
         # This makes sure that no collisions are wrongfully detected at the start of an episode 
         time.sleep(0.1)
 
-        self.distance_to_end = 10.0
+        self.distance_to_end = 10
         self.collision = False
         self.step_number = 0
         self.previous_action = -1
