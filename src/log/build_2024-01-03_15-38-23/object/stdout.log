@@ -1,0 +1,32 @@
+running egg_info
+creating ../build/object/object.egg-info
+writing ../build/object/object.egg-info/PKG-INFO
+writing dependency_links to ../build/object/object.egg-info/dependency_links.txt
+writing entry points to ../build/object/object.egg-info/entry_points.txt
+writing requirements to ../build/object/object.egg-info/requires.txt
+writing top-level names to ../build/object/object.egg-info/top_level.txt
+writing manifest file '../build/object/object.egg-info/SOURCES.txt'
+reading manifest file '../build/object/object.egg-info/SOURCES.txt'
+adding license file 'LICENSE'
+writing manifest file '../build/object/object.egg-info/SOURCES.txt'
+running build
+running build_py
+creating /home/ros2/ros2_ws/src/ros2_flatland_rl_tutorial/src/build/object/build
+creating /home/ros2/ros2_ws/src/ros2_flatland_rl_tutorial/src/build/object/build/lib
+creating /home/ros2/ros2_ws/src/ros2_flatland_rl_tutorial/src/build/object/build/lib/object
+copying object/__init__.py -> /home/ros2/ros2_ws/src/ros2_flatland_rl_tutorial/src/build/object/build/lib/object
+running install
+running install_lib
+creating /home/ros2/ros2_ws/src/ros2_flatland_rl_tutorial/src/install/object/lib/python3.10/site-packages/object
+copying /home/ros2/ros2_ws/src/ros2_flatland_rl_tutorial/src/build/object/build/lib/object/__init__.py -> /home/ros2/ros2_ws/src/ros2_flatland_rl_tutorial/src/install/object/lib/python3.10/site-packages/object
+byte-compiling /home/ros2/ros2_ws/src/ros2_flatland_rl_tutorial/src/install/object/lib/python3.10/site-packages/object/__init__.py to __init__.cpython-310.pyc
+running install_data
+creating /home/ros2/ros2_ws/src/ros2_flatland_rl_tutorial/src/install/object/share/ament_index
+creating /home/ros2/ros2_ws/src/ros2_flatland_rl_tutorial/src/install/object/share/ament_index/resource_index
+creating /home/ros2/ros2_ws/src/ros2_flatland_rl_tutorial/src/install/object/share/ament_index/resource_index/packages
+copying resource/object -> /home/ros2/ros2_ws/src/ros2_flatland_rl_tutorial/src/install/object/share/ament_index/resource_index/packages
+copying package.xml -> /home/ros2/ros2_ws/src/ros2_flatland_rl_tutorial/src/install/object/share/object
+running install_egg_info
+Copying ../build/object/object.egg-info to /home/ros2/ros2_ws/src/ros2_flatland_rl_tutorial/src/install/object/lib/python3.10/site-packages/object-0.0.0-py3.10.egg-info
+running install_scripts
+writing list of installed files to '/home/ros2/ros2_ws/src/ros2_flatland_rl_tutorial/src/build/object/install.log'

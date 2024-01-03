@@ -1,0 +1,51 @@
+running egg_info
+creating ../build/serp_rl/serp_rl.egg-info
+writing ../build/serp_rl/serp_rl.egg-info/PKG-INFO
+writing dependency_links to ../build/serp_rl/serp_rl.egg-info/dependency_links.txt
+writing entry points to ../build/serp_rl/serp_rl.egg-info/entry_points.txt
+writing requirements to ../build/serp_rl/serp_rl.egg-info/requires.txt
+writing top-level names to ../build/serp_rl/serp_rl.egg-info/top_level.txt
+writing manifest file '../build/serp_rl/serp_rl.egg-info/SOURCES.txt'
+reading manifest file '../build/serp_rl/serp_rl.egg-info/SOURCES.txt'
+writing manifest file '../build/serp_rl/serp_rl.egg-info/SOURCES.txt'
+running build
+running build_py
+creating /home/ros2/ros2_ws/src/ros2_flatland_rl_tutorial/src/build/serp_rl/build
+creating /home/ros2/ros2_ws/src/ros2_flatland_rl_tutorial/src/build/serp_rl/build/lib
+creating /home/ros2/ros2_ws/src/ros2_flatland_rl_tutorial/src/build/serp_rl/build/lib/serp_rl
+copying serp_rl/__init__.py -> /home/ros2/ros2_ws/src/ros2_flatland_rl_tutorial/src/build/serp_rl/build/lib/serp_rl
+running install
+/usr/lib/python3/dist-packages/setuptools/command/install.py:34: SetuptoolsDeprecationWarning: setup.py install is deprecated. Use build and pip and other standards-based tools.
+  warnings.warn(
+running install_lib
+creating /home/ros2/ros2_ws/src/ros2_flatland_rl_tutorial/src/install/serp_rl/lib/python3.10/site-packages/serp_rl
+copying /home/ros2/ros2_ws/src/ros2_flatland_rl_tutorial/src/build/serp_rl/build/lib/serp_rl/__init__.py -> /home/ros2/ros2_ws/src/ros2_flatland_rl_tutorial/src/install/serp_rl/lib/python3.10/site-packages/serp_rl
+byte-compiling /home/ros2/ros2_ws/src/ros2_flatland_rl_tutorial/src/install/serp_rl/lib/python3.10/site-packages/serp_rl/__init__.py to __init__.cpython-310.pyc
+running install_data
+copying package.xml -> /home/ros2/ros2_ws/src/ros2_flatland_rl_tutorial/src/install/serp_rl/share/serp_rl
+creating /home/ros2/ros2_ws/src/ros2_flatland_rl_tutorial/src/install/serp_rl/share/serp_rl/launch
+copying launch/serp_rl.launch.py -> /home/ros2/ros2_ws/src/ros2_flatland_rl_tutorial/src/install/serp_rl/share/serp_rl/launch/
+creating /home/ros2/ros2_ws/src/ros2_flatland_rl_tutorial/src/install/serp_rl/share/serp_rl/rviz
+copying rviz/robot_navigation.rviz -> /home/ros2/ros2_ws/src/ros2_flatland_rl_tutorial/src/install/serp_rl/share/serp_rl/rviz/
+creating /home/ros2/ros2_ws/src/ros2_flatland_rl_tutorial/src/install/serp_rl/share/serp_rl/world
+copying world/serp_sonar.model.yaml -> /home/ros2/ros2_ws/src/ros2_flatland_rl_tutorial/src/install/serp_rl/share/serp_rl/world/
+copying world/complex_turn.yaml -> /home/ros2/ros2_ws/src/ros2_flatland_rl_tutorial/src/install/serp_rl/share/serp_rl/world/
+copying world/turn.png -> /home/ros2/ros2_ws/src/ros2_flatland_rl_tutorial/src/install/serp_rl/share/serp_rl/world/
+copying world/turn.yaml -> /home/ros2/ros2_ws/src/ros2_flatland_rl_tutorial/src/install/serp_rl/share/serp_rl/world/
+copying world/empty.yaml -> /home/ros2/ros2_ws/src/ros2_flatland_rl_tutorial/src/install/serp_rl/share/serp_rl/world/
+copying world/complex_turn.png -> /home/ros2/ros2_ws/src/ros2_flatland_rl_tutorial/src/install/serp_rl/share/serp_rl/world/
+copying world/end_beacon.model.yaml -> /home/ros2/ros2_ws/src/ros2_flatland_rl_tutorial/src/install/serp_rl/share/serp_rl/world/
+copying world/empty.png -> /home/ros2/ros2_ws/src/ros2_flatland_rl_tutorial/src/install/serp_rl/share/serp_rl/world/
+copying world/world2.yaml -> /home/ros2/ros2_ws/src/ros2_flatland_rl_tutorial/src/install/serp_rl/share/serp_rl/world/
+copying world/movable_object.model.yaml -> /home/ros2/ros2_ws/src/ros2_flatland_rl_tutorial/src/install/serp_rl/share/serp_rl/world/
+copying world/serp.model.yaml -> /home/ros2/ros2_ws/src/ros2_flatland_rl_tutorial/src/install/serp_rl/share/serp_rl/world/
+copying world/world.yaml -> /home/ros2/ros2_ws/src/ros2_flatland_rl_tutorial/src/install/serp_rl/share/serp_rl/world/
+creating /home/ros2/ros2_ws/src/ros2_flatland_rl_tutorial/src/install/serp_rl/share/ament_index
+creating /home/ros2/ros2_ws/src/ros2_flatland_rl_tutorial/src/install/serp_rl/share/ament_index/resource_index
+creating /home/ros2/ros2_ws/src/ros2_flatland_rl_tutorial/src/install/serp_rl/share/ament_index/resource_index/packages
+copying resource/serp_rl -> /home/ros2/ros2_ws/src/ros2_flatland_rl_tutorial/src/install/serp_rl/share/ament_index/resource_index/packages
+running install_egg_info
+Copying ../build/serp_rl/serp_rl.egg-info to /home/ros2/ros2_ws/src/ros2_flatland_rl_tutorial/src/install/serp_rl/lib/python3.10/site-packages/serp_rl-0.0.0-py3.10.egg-info
+running install_scripts
+Installing serp_rl script to /home/ros2/ros2_ws/src/ros2_flatland_rl_tutorial/src/install/serp_rl/lib/serp_rl
+writing list of installed files to '/home/ros2/ros2_ws/src/ros2_flatland_rl_tutorial/src/build/serp_rl/install.log'

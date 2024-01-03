@@ -36,52 +36,13 @@ def generate_launch_description():
             
             SetEnvironmentVariable(name="ROSCONSOLE_FORMAT", value="[${severity} ${time} ${logger}]: ${message}"),
 
-            # **** Nodes launched by this file ****
-            # launch flatland server
-            Node(
-                name="flatland_server",
-                package="flatland_server",
-                executable="flatland_server",
-                output="screen",
-                parameters=[
-                    # use the arguments passed into the launchfile for this node
-                    {"world_path": world_path},
-                    {"update_rate": update_rate},
-                    {"step_size": step_size},
-                    {"show_viz": show_viz},
-                    {"viz_pub_rate": viz_pub_rate},
-                    {"use_sim_time": use_sim_time},
-                ],
-            ),
             # runs the code in the file serp_rl/__init__.py that is used to control the robot
             Node(
-                name="serp_rl",
-                package="serp_rl",
-                executable="serp_rl",
+                name="object",
+                package="object",
+                executable="object",
                 output="screen",
-                parameters=[
-                    {"world_path": world_path},
-                ],
             ),
-
-            # maps
-            Node(
-                name="tf",
-                package="tf2_ros",
-                executable="static_transform_publisher",
-                arguments=["0", "0", "0", "0", "0", "0", "map", "odom"],
-            ),
-
-            # visualisation 
-            Node(
-                name="rviz",
-                package="rviz2",
-                executable="rviz2",
-                arguments=["-d", PathJoinSubstitution([pkg_share, "rviz/robot_navigation.rviz"])],
-                parameters=[{"use_sim_time": use_sim_time}],
-                condition=conditions.IfCondition(show_viz),
-            ),
-
         ]
     )
     return ld

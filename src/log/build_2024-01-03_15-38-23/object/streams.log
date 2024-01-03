@@ -1,0 +1,36 @@
+[0.813s] Invoking command in '/home/ros2/ros2_ws/src/ros2_flatland_rl_tutorial/src/object': PYTHONPATH=/home/ros2/ros2_ws/src/ros2_flatland_rl_tutorial/src/build/object/prefix_override:/home/ros2/ros2_ws/src/ros2_flatland_rl_tutorial/src/install/object/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../build/object build --build-base /home/ros2/ros2_ws/src/ros2_flatland_rl_tutorial/src/build/object/build install --record /home/ros2/ros2_ws/src/ros2_flatland_rl_tutorial/src/build/object/install.log --single-version-externally-managed
+[1.031s] running egg_info
+[1.032s] creating ../build/object/object.egg-info
+[1.032s] writing ../build/object/object.egg-info/PKG-INFO
+[1.033s] writing dependency_links to ../build/object/object.egg-info/dependency_links.txt
+[1.033s] writing entry points to ../build/object/object.egg-info/entry_points.txt
+[1.033s] writing requirements to ../build/object/object.egg-info/requires.txt
+[1.033s] writing top-level names to ../build/object/object.egg-info/top_level.txt
+[1.034s] writing manifest file '../build/object/object.egg-info/SOURCES.txt'
+[1.035s] reading manifest file '../build/object/object.egg-info/SOURCES.txt'
+[1.036s] adding license file 'LICENSE'
+[1.036s] writing manifest file '../build/object/object.egg-info/SOURCES.txt'
+[1.037s] running build
+[1.037s] running build_py
+[1.037s] creating /home/ros2/ros2_ws/src/ros2_flatland_rl_tutorial/src/build/object/build
+[1.037s] creating /home/ros2/ros2_ws/src/ros2_flatland_rl_tutorial/src/build/object/build/lib
+[1.037s] creating /home/ros2/ros2_ws/src/ros2_flatland_rl_tutorial/src/build/object/build/lib/object
+[1.037s] copying object/__init__.py -> /home/ros2/ros2_ws/src/ros2_flatland_rl_tutorial/src/build/object/build/lib/object
+[1.037s] running install
+[1.037s] /usr/lib/python3/dist-packages/setuptools/command/install.py:34: SetuptoolsDeprecationWarning: setup.py install is deprecated. Use build and pip and other standards-based tools.
+[1.037s]   warnings.warn(
+[1.038s] running install_lib
+[1.038s] creating /home/ros2/ros2_ws/src/ros2_flatland_rl_tutorial/src/install/object/lib/python3.10/site-packages/object
+[1.038s] copying /home/ros2/ros2_ws/src/ros2_flatland_rl_tutorial/src/build/object/build/lib/object/__init__.py -> /home/ros2/ros2_ws/src/ros2_flatland_rl_tutorial/src/install/object/lib/python3.10/site-packages/object
+[1.039s] byte-compiling /home/ros2/ros2_ws/src/ros2_flatland_rl_tutorial/src/install/object/lib/python3.10/site-packages/object/__init__.py to __init__.cpython-310.pyc
+[1.040s] running install_data
+[1.040s] creating /home/ros2/ros2_ws/src/ros2_flatland_rl_tutorial/src/install/object/share/ament_index
+[1.041s] creating /home/ros2/ros2_ws/src/ros2_flatland_rl_tutorial/src/install/object/share/ament_index/resource_index
+[1.041s] creating /home/ros2/ros2_ws/src/ros2_flatland_rl_tutorial/src/install/object/share/ament_index/resource_index/packages
+[1.041s] copying resource/object -> /home/ros2/ros2_ws/src/ros2_flatland_rl_tutorial/src/install/object/share/ament_index/resource_index/packages
+[1.041s] copying package.xml -> /home/ros2/ros2_ws/src/ros2_flatland_rl_tutorial/src/install/object/share/object
+[1.041s] running install_egg_info
+[1.044s] Copying ../build/object/object.egg-info to /home/ros2/ros2_ws/src/ros2_flatland_rl_tutorial/src/install/object/lib/python3.10/site-packages/object-0.0.0-py3.10.egg-info
+[1.045s] running install_scripts
+[1.066s] writing list of installed files to '/home/ros2/ros2_ws/src/ros2_flatland_rl_tutorial/src/build/object/install.log'
+[1.104s] Invoked command in '/home/ros2/ros2_ws/src/ros2_flatland_rl_tutorial/src/object' returned '0': PYTHONPATH=/home/ros2/ros2_ws/src/ros2_flatland_rl_tutorial/src/build/object/prefix_override:/home/ros2/ros2_ws/src/ros2_flatland_rl_tutorial/src/install/object/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../build/object build --build-base /home/ros2/ros2_ws/src/ros2_flatland_rl_tutorial/src/build/object/build install --record /home/ros2/ros2_ws/src/ros2_flatland_rl_tutorial/src/build/object/install.log --single-version-externally-managed
