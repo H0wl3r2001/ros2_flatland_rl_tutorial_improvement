@@ -320,7 +320,7 @@ class SerpControllerEnv(Node, Env):
         agent.save(f"src/ros2_flatland_rl_tutorial/{alg.lower()}")
 
 def main(args = None):
-    rclpy.init(args = args)
+    rclpy.init()
     
     serp = SerpControllerEnv()
 

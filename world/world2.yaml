@@ -18,7 +18,7 @@ layers:
   - end_laser_layer
   - end_beacon_layer
 models:
-- model: serp.model.yaml
+- model: serp_sonar.model.yaml
   name: serp
   pose:
   - 0.0
