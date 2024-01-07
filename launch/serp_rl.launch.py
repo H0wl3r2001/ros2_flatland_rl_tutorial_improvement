@@ -10,14 +10,13 @@ import yaml
 def generate_launch_description():
     pkg_share = FindPackageShare("serp_rl")
 
+    rl_alg = LaunchConfiguration("rl_alg")
     world_path = LaunchConfiguration("world_path")
     update_rate = LaunchConfiguration("update_rate")
     step_size = LaunchConfiguration("step_size")
     show_viz = LaunchConfiguration("show_viz")
     viz_pub_rate = LaunchConfiguration("viz_pub_rate")
     use_sim_time = LaunchConfiguration("use_sim_time")
-
-    #world = '2'
 
     ld = LaunchDescription(
         [
@@ -33,6 +32,7 @@ def generate_launch_description():
                 name="world_path",
                 default_value=PathJoinSubstitution([pkg_share, "world/world.yaml"]),
             ),
+            DeclareLaunchArgument(name="rl_alg", default_value="PPO"),
             
             SetEnvironmentVariable(name="ROSCONSOLE_FORMAT", value="[${severity} ${time} ${logger}]: ${message}"),
 
@@ -61,6 +61,7 @@ def generate_launch_description():
                 output="screen",
                 parameters=[
                     {"world_path": world_path},
+                    {"rl_alg": rl_alg},
                 ],
             ),
 

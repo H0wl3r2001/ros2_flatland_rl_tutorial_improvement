@@ -11,7 +11,7 @@ from rcl_interfaces.msg import Parameter
 from gym import Env
 from gym.spaces import Discrete, Box
 
-from stable_baselines3 import PPO
+from stable_baselines3 import PPO, A2C
 from stable_baselines3.common.env_checker import check_env
 
 import numpy as np
@@ -37,6 +37,8 @@ class SerpControllerEnv(Node, Env):
 
         # How close the robot needs to be to the target to finish the task
         self.end_range = 0.2
+
+        print(self._parameter_overrides['world_path']._value)
 
         with open(self._parameter_overrides['world_path']._value, 'r') as file:
             data = yaml.load(file, Loader=yaml.FullLoader)
@@ -64,9 +66,8 @@ class SerpControllerEnv(Node, Env):
         beacon_point = tuple(data['models'][1]['pose'])
 
         # current distance to target
-        #self.distance_to_end_calc = math.sqrt((beacon_point[0] - start_point[0])**2 + (beacon_point[1] - start_point[1])**2)
-        self.distance_to_end = 10
-        #print(self.distance_to_end)
+        self.factor = math.floor(abs(math.sqrt((beacon_point[0] - start_point[0])**2 + (beacon_point[1] - start_point[1])**2)))
+        self.distance_to_end = 5 * self.factor
 
         # Possible starting positions
         self.start_positions = [(0.0, 0.0, 1.57079632679), tuple(data['models'][1]['pose'])]
@@ -135,7 +136,7 @@ class SerpControllerEnv(Node, Env):
         # This makes sure that no collisions are wrongfully detected at the start of an episode 
         time.sleep(0.1)
 
-        self.distance_to_end = 10
+        self.distance_to_end = 5 * self.factor
         self.collision = False
         self.step_number = 0
         self.previous_action = -1
@@ -270,8 +271,14 @@ class SerpControllerEnv(Node, Env):
         check_env(self)
         self.wait_lidar_reading()
 
+        alg = str(self._parameter_overrides['rl_alg']._value)
+        rl_alg = globals().get(alg)
+
+        if rl_alg == None:
+            return
+
         # Create the agent
-        agent = PPO("MlpPolicy", self, verbose=1)
+        agent = rl_alg("MlpPolicy", self, verbose=1)
 
         # Target accuracy
         min_accuracy = 0.8
@@ -310,8 +317,7 @@ class SerpControllerEnv(Node, Env):
 
         self.get_logger().info('Training Finished. Training iterations: ' + str(training_iterations) + '  Accuracy: ' + str(accuracy))
 
-
-        agent.save("src/ros2_flatland_rl_tutorial/ppo")
+        agent.save(f"src/ros2_flatland_rl_tutorial/{alg.lower()}")
 
 def main(args = None):
     rclpy.init(args = args)
