@@ -13,6 +13,7 @@ from gym.spaces import Discrete, Box
 
 from stable_baselines3 import PPO, A2C
 from stable_baselines3.common.env_checker import check_env
+from stable_baselines3 import DQN
 
 import numpy as np
 import time
@@ -77,7 +78,7 @@ class SerpControllerEnv(Node, Env):
         self.step_number = 0
 
         # Maximum number of steps before it times out
-        self.max_steps = 200
+        self.max_steps = 600
 
         # Records previous action taken. At the start of an episode, there is no prior action so -1 is assigned
         self.previous_action = -1
@@ -166,11 +167,14 @@ class SerpControllerEnv(Node, Env):
 
         end_state = ''
 
+        print('END: ', self.distance_to_end)
+
         if self.collision:
             end_state = "colision"
             reward = -200
             done = True
         elif self.distance_to_end < self.end_range:
+            print('FINISHED')
             end_state = "finished"
             reward = 400 + (200 - self.step_number)
             done = True
@@ -278,7 +282,9 @@ class SerpControllerEnv(Node, Env):
             return
 
         # Create the agent
-        agent = rl_alg("MlpPolicy", self, verbose=1)
+        #agent = rl_alg("MlpPolicy", self, verbose=1)
+
+        agent = PPO.load(f"src/ros2_flatland_rl_tutorial/ppo.zip", env=self)
 
         # Target accuracy
         min_accuracy = 0.8
@@ -310,6 +316,11 @@ class SerpControllerEnv(Node, Env):
             
             # Calculate the accuracy
             accuracy = successful_episodes/n_test_episodes
+
+            print('TRAINING> ', training_iterations)
+
+            if training_iterations % 500 == 0 and training_iterations != 0:
+                agent.save(f"src/ros2_flatland_rl_tutorial/{alg.lower()}")
 
             self.get_logger().info('Testing finished. Accuracy: ' + str(accuracy))
 
