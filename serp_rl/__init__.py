@@ -59,19 +59,19 @@ class SerpControllerEnv(Node, Env):
         world_type = data['layers'][0]['map']
 
         if world_type == 'turn.yaml':
-            data['models'][1]['pose'][2] = 3.14159265359
+            data['models'][2]['pose'][2] = 3.14159265359
         else:
-           data['models'][1]['pose'][2] = 4.71238898038
+           data['models'][2]['pose'][2] = 4.71238898038
 
         start_point = (0.0, 0.0, 1.57079632679)
-        beacon_point = tuple(data['models'][1]['pose'])
+        beacon_point = tuple(data['models'][2]['pose'])
 
         # current distance to target
         self.factor = math.floor(abs(math.sqrt((beacon_point[0] - start_point[0])**2 + (beacon_point[1] - start_point[1])**2)))
         self.distance_to_end = 5 * self.factor
 
         # Possible starting positions
-        self.start_positions = [(0.0, 0.0, 1.57079632679), tuple(data['models'][1]['pose'])]
+        self.start_positions = [(0.0, 0.0, 1.57079632679), tuple(data['models'][2]['pose'])]
         # Current position
         self.position = 0
 

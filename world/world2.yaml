@@ -18,14 +18,20 @@ layers:
   - end_laser_layer
   - end_beacon_layer
 models:
-- model: serp.model.yaml
-  name: serp
+- name: serp
+  model: "serp.model.yaml"
   pose:
   - 0.0
   - 0.0
   - 1.57079632679
-- model: end_beacon.model.yaml
-  name: end_beacon
+- name: object 
+  model: "object.model.yaml"
+  pose:
+  - 0.15
+  - 0.0
+  - 1.57079632679
+- name: end_beacon
+  model: "end_beacon.model.yaml"
   pose:
   - 3.4
   - 3.5

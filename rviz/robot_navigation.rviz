@@ -431,6 +431,15 @@ Visualization Manager:
     - Class: rviz_default_plugins/MarkerArray
       Enabled: true
       Topic:
+        Value: /models/object_serp
+      Name: Turtlebot
+      Namespaces:
+        "": true
+      Queue Size: 100
+      Value: true
+    - Class: rviz_default_plugins/MarkerArray
+      Enabled: true
+      Topic:
         Value: /models/m_end_beacon
       Name: Turtlebot
       Namespaces:
