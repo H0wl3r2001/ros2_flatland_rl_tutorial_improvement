@@ -24,16 +24,16 @@ models:
   - 0.0
   - 0.0
   - 1.57079632679
-- name: object 
-  model: "object.model.yaml"
-  pose:
-  - 0.15
-  - 0.0
-  - 1.57079632679
 - name: end_beacon
   model: "end_beacon.model.yaml"
   pose:
   - 3.4
   - 3.5
   - 0.0
+- name: object 
+  model: "object.model.yaml"
+  pose:
+  - 1.5
+  - 1.5
+  - 1.57079632679
 properties: {}

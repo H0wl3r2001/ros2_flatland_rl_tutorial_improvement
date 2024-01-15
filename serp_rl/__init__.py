@@ -36,6 +36,11 @@ class SerpControllerEnv(Node, Env):
                         (0.0, angular_speed), # rotate left
                         (0.0, -angular_speed)] # rotate right
 
+        self.object_actions = [(0.15, 0.0),
+                              (0.0, math.pi)]
+
+        self.object_current_action = self.object_actions[0]
+
         # How close the robot needs to be to the target to finish the task
         self.end_range = 0.2
 
@@ -59,19 +64,20 @@ class SerpControllerEnv(Node, Env):
         world_type = data['layers'][0]['map']
 
         if world_type == 'turn.yaml':
-            data['models'][2]['pose'][2] = 3.14159265359
+            data['models'][1]['pose'][2] = 3.14159265359
         else:
-           data['models'][2]['pose'][2] = 4.71238898038
+           data['models'][1]['pose'][2] = 4.71238898038
 
-        start_point = (0.0, 0.0, 1.57079632679)
-        beacon_point = tuple(data['models'][2]['pose'])
+        serp_start_point = (0.0, 0.0, 1.57079632679)
+        beacon_point = tuple(data['models'][1]['pose'])
+        object_start_point = (1.5, 1.5, 1.57079632679)
 
         # current distance to target
-        self.factor = math.floor(abs(math.sqrt((beacon_point[0] - start_point[0])**2 + (beacon_point[1] - start_point[1])**2)))
+        self.factor = math.floor(abs(math.sqrt((beacon_point[0] - serp_start_point[0])**2 + (beacon_point[1] - serp_start_point[1])**2)))
         self.distance_to_end = 5 * self.factor
 
         # Possible starting positions
-        self.start_positions = [(0.0, 0.0, 1.57079632679), tuple(data['models'][2]['pose'])]
+        self.start_positions = [serp_start_point, beacon_point, object_start_point]
         # Current position
         self.position = 0
 
@@ -90,6 +96,8 @@ class SerpControllerEnv(Node, Env):
                                     
         # **** Create publishers ****
         self.pub:Publisher = self.create_publisher(Twist, "/cmd_vel", 1)
+
+        self.obj_pub:Publisher = self.create_publisher(Twist, "/cmd_vel2", 1)
         # ***************************
 
         # **** Create subscriptions ****
@@ -98,6 +106,8 @@ class SerpControllerEnv(Node, Env):
         self.create_subscription(LaserScan, "/end_beacon_laser", self.processEndLiDAR, 1)
 
         self.create_subscription(Collisions, "/collisions", self.processCollisions, 1)
+
+        self.create_subscription(Collisions, "/collisions2", self.processCollisions2, 1)
         # ******************************
 
         # **** Define action and state spaces ****
@@ -121,10 +131,12 @@ class SerpControllerEnv(Node, Env):
 
         # **** Move robot and end beacon to new positions ****
         start_pos = self.start_positions[self.position]
+        object_start_pos = self.start_positions[2]
         self.position = 1 - self.position
         end_pos = self.start_positions[self.position]
         
         self.move_model('serp', start_pos[0], start_pos[1], start_pos[2])
+        self.move_model('object', object_start_pos[0], object_start_pos[1], object_start_pos[2])
         self.move_model('end_beacon', end_pos[0], end_pos[1], 0.0)
         # ****************************************************
 
@@ -155,6 +167,12 @@ class SerpControllerEnv(Node, Env):
         self.wait_lidar_reading()
         self.change_speed(self.pub, 0.0, 0.0)
         # **************************************************************
+
+        # **** Move Object ****
+        self.change_speed(self.obj_pub, self.object_current_action[0], self.object_current_action[1])
+        
+        self.object_current_action = self.object_actions[0]
+        # *********************
 
         # Register current state
         self.state = np.array(self.lidar_sample)
@@ -252,6 +270,10 @@ class SerpControllerEnv(Node, Env):
     def processCollisions(self, data):
         if len(data.collisions) > 0:
             self.collision = True
+
+    def processCollisions2(self, data):
+        if len(data.collisions) > 0:
+            self.object_current_action = self.object_actions[1]
 
     # Run an entire episode manually for testing purposes
     # return true if succesful

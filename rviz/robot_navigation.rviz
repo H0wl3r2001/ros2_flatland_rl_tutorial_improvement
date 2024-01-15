@@ -431,7 +431,7 @@ Visualization Manager:
     - Class: rviz_default_plugins/MarkerArray
       Enabled: true
       Topic:
-        Value: /models/object_serp
+        Value: /models/m_object
       Name: Turtlebot
       Namespaces:
         "": true

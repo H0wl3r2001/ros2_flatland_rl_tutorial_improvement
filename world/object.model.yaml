@@ -11,10 +11,10 @@ bodies:
       - type: polygon
         density: 1
         layers: ["collisions_layer", "end_laser_layer"]
-        points: [ [-0.117, -0.055],
-                  [0.048, -0.055],
-                  [0.048, 0.055],
-                  [-0.117, 0.055] ]
+        points: [ [-0.110, -0.050],
+                  [0.043, -0.050],
+                  [0.043, 0.050],
+                  [-0.110, 0.050] ]
 
   - name: left_wheel
     color: [1, 1, 0, 0.75] 
@@ -59,9 +59,9 @@ plugins:
     name: serp_diff_drive
     body: base_link
     pub_rate: 10
-    twist_sub: cmd_vel
+    twist_sub: cmd_vel2
     odom_frame_id: odom
-    odom_pub: odom  # topic odom is published on
+    odom_pub: odom2  # topic odom is published on
   
   # needed for some visualization components
   - type: ModelTfPublisher
@@ -70,5 +70,5 @@ plugins:
 
   - type: Bumper
     name: bumper
-    topic: collisions
+    topic: collisions2
     update_rate: 10
