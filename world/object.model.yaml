@@ -2,7 +2,7 @@
 
 bodies:
 
-  - name: base_link
+  - name: obj_link
     enabled: true
     pose: [0, 0, 0]
     type: dynamic
@@ -10,32 +10,32 @@ bodies:
     footprints:
       - type: polygon
         density: 1
-        layers: ["collisions_layer", "end_laser_layer"]
-        points: [ [-0.110, -0.050],
-                  [0.043, -0.050],
-                  [0.043, 0.050],
-                  [-0.110, 0.050] ]
+        layers: ["collisions_layer"]
+        points: [ [-0.100, -0.040],
+                  [0.033, -0.040],
+                  [0.033, 0.040],
+                  [-0.100, 0.040] ]
 
   - name: left_wheel
     color: [1, 1, 0, 0.75] 
     footprints:
       - type: polygon
         density: 1.0
-        layers: ["collisions_layer", "end_laser_layer"]
-        points: [ [ -0.035, -0.0125],
-                  [ 0.035,  -0.0125],
-                  [ 0.035, 0.0125],
-                  [ -0.035, 0.0125] ]
+        layers: ["collisions_layer"]
+        points: [ [ -0.015, -0.0100],
+                  [ 0.015,  -0.0100],
+                  [ 0.015, 0.0100],
+                  [ -0.015, 0.0100] ]
   - name: right_wheel
     color: [1, 1, 0, 0.75] 
     footprints:
       - type: polygon
         density: 1.0
-        layers: ["collisions_layer", "end_laser_layer"]
-        points: [ [ -0.035, -0.0125],
-                  [ 0.035,  -0.0125],
-                  [ 0.035, 0.0125],
-                  [ -0.035, 0.0125] ]
+        layers: ["collisions_layer"]
+        points: [ [ -0.015, -0.0100],
+                  [ 0.015,  -0.0100],
+                  [ 0.015, 0.0100],
+                  [ -0.015, 0.0100] ]
 
 joints: 
   - type: weld
@@ -43,7 +43,7 @@ joints:
     bodies: 
       - name: left_wheel
         anchor: [0, 0]
-      - name: base_link
+      - name: obj_link
         anchor: [0, -0.0725]
 
   - type: weld
@@ -51,15 +51,15 @@ joints:
     bodies: 
       - name: right_wheel
         anchor: [0, 0]
-      - name: base_link
+      - name: obj_link
         anchor: [0, 0.0725]
 
 plugins:
   - type: DiffDrive
     name: serp_diff_drive
-    body: base_link
+    body: obj_link
     pub_rate: 10
-    twist_sub: cmd_vel2
+    twist_sub: object_cmd_vel
     odom_frame_id: odom
     odom_pub: odom2  # topic odom is published on
   
@@ -70,5 +70,5 @@ plugins:
 
   - type: Bumper
     name: bumper
-    topic: collisions2
+    topic: object_collisions
     update_rate: 10

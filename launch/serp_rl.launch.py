@@ -11,6 +11,7 @@ def generate_launch_description():
     pkg_share = FindPackageShare("serp_rl")
 
     rl_alg = LaunchConfiguration("rl_alg")
+    modal_path = LaunchConfiguration("modal_path")
     world_path = LaunchConfiguration("world_path")
     update_rate = LaunchConfiguration("update_rate")
     step_size = LaunchConfiguration("step_size")
@@ -33,6 +34,7 @@ def generate_launch_description():
                 default_value=PathJoinSubstitution([pkg_share, "world/world.yaml"]),
             ),
             DeclareLaunchArgument(name="rl_alg", default_value="PPO"),
+            DeclareLaunchArgument(name="modal_path", default_value=""),
             
             SetEnvironmentVariable(name="ROSCONSOLE_FORMAT", value="[${severity} ${time} ${logger}]: ${message}"),
 
@@ -62,6 +64,7 @@ def generate_launch_description():
                 parameters=[
                     {"world_path": world_path},
                     {"rl_alg": rl_alg},
+                    {"modal_path": modal_path},
                 ],
             ),
 

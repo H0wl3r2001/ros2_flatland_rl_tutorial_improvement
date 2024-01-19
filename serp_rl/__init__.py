@@ -16,16 +16,21 @@ from stable_baselines3.common.env_checker import check_env
 from stable_baselines3 import DQN
 
 import numpy as np
+import math
+import yaml
 import time
 import threading
 
-import yaml
-import math
-
+import sys
 
 class SerpControllerEnv(Node, Env):
     def __init__(self) -> None:
         super().__init__("SerpControllerEnv")
+
+        #Moovable objectt parameters
+        self.object_action = (0.05, 0.0)
+        self.object_start_position = [(1.4, 1.4, 1.57079632679), (1.4, 1.8, -1.57079632679)]
+
 
         # Predefined speed for the robot
         linear_speed = 0.5
@@ -36,50 +41,33 @@ class SerpControllerEnv(Node, Env):
                         (0.0, angular_speed), # rotate left
                         (0.0, -angular_speed)] # rotate right
 
-        self.object_actions = [(0.15, 0.0),
-                              (0.0, math.pi)]
-
-        self.object_current_action = self.object_actions[0]
+        self.lidar_sample = []
+        
+        # Number of divisions of the LiDAR
+        self.n_lidar_sections = 9
 
         # How close the robot needs to be to the target to finish the task
         self.end_range = 0.2
-
-        print(self._parameter_overrides['world_path']._value)
-
-        with open(self._parameter_overrides['world_path']._value, 'r') as file:
-            data = yaml.load(file, Loader=yaml.FullLoader)
-
-        self.n_lidar_sections = 9
-
-        # Number of divisions of the LiDAR
-        if data['models'][0]['model'] == 'serp_sonar.model.yaml':
-            self.n_lidar_sections = 3
-        print(self.n_lidar_sections)
-        self.lidar_sample = []
 
         # Variables that track a possible end state
         # true if a collision happens
         self.collision = False
 
-        world_type = data['layers'][0]['map']
-
-        if world_type == 'turn.yaml':
-            data['models'][1]['pose'][2] = 3.14159265359
-        else:
-           data['models'][1]['pose'][2] = 4.71238898038
-
         serp_start_point = (0.0, 0.0, 1.57079632679)
-        beacon_point = tuple(data['models'][1]['pose'])
-        object_start_point = (1.5, 1.5, 1.57079632679)
+        beacon_point = setup_beacon_position(self)
 
         # current distance to target
         self.factor = math.floor(abs(math.sqrt((beacon_point[0] - serp_start_point[0])**2 + (beacon_point[1] - serp_start_point[1])**2)))
         self.distance_to_end = 5 * self.factor
 
         # Possible starting positions
-        self.start_positions = [serp_start_point, beacon_point, object_start_point]
+        self.start_positions = [serp_start_point, beacon_point, self.object_start_position[0]]
+        
         # Current position
         self.position = 0
+
+        # Current object position
+        self.obj_position = 1
 
         self.step_number = 0
 
@@ -97,7 +85,7 @@ class SerpControllerEnv(Node, Env):
         # **** Create publishers ****
         self.pub:Publisher = self.create_publisher(Twist, "/cmd_vel", 1)
 
-        self.obj_pub:Publisher = self.create_publisher(Twist, "/cmd_vel2", 1)
+        self.obj_pub:Publisher = self.create_publisher(Twist, "/object_cmd_vel", 1)
         # ***************************
 
         # **** Create subscriptions ****
@@ -107,7 +95,7 @@ class SerpControllerEnv(Node, Env):
 
         self.create_subscription(Collisions, "/collisions", self.processCollisions, 1)
 
-        self.create_subscription(Collisions, "/collisions2", self.processCollisions2, 1)
+        self.create_subscription(Collisions, "/object_collisions", self.processObjectCollisions, 1)
         # ******************************
 
         # **** Define action and state spaces ****
@@ -126,6 +114,7 @@ class SerpControllerEnv(Node, Env):
     def reset(self):
         # Make sure the robot is stopped
         self.change_speed(self.pub, 0.0, 0.0)
+        self.change_speed(self.obj_pub, 0.0, 0.0)
 
         if self.total_step_cnt != 0: self.total_episode_cnt += 1
 
@@ -169,9 +158,7 @@ class SerpControllerEnv(Node, Env):
         # **************************************************************
 
         # **** Move Object ****
-        self.change_speed(self.obj_pub, self.object_current_action[0], self.object_current_action[1])
-        
-        self.object_current_action = self.object_actions[0]
+        self.change_speed(self.obj_pub, self.object_action[0], self.object_action[1])
         # *********************
 
         # Register current state
@@ -185,14 +172,11 @@ class SerpControllerEnv(Node, Env):
 
         end_state = ''
 
-        print('END: ', self.distance_to_end)
-
         if self.collision:
             end_state = "colision"
             reward = -200
             done = True
         elif self.distance_to_end < self.end_range:
-            print('FINISHED')
             end_state = "finished"
             reward = 400 + (200 - self.step_number)
             done = True
@@ -258,7 +242,6 @@ class SerpControllerEnv(Node, Env):
             self.lidar_sample.append(min(rays[rays_per_section * i:rays_per_section * (i + 1)]))
         self.lidar_sample.append(min(rays[(self.n_lidar_sections - 1) * rays_per_section:]))
 
-    
     # Handle end beacon LiDAR data
     # Lowest value is the distance from robot to target
     def processEndLiDAR(self, data):
@@ -271,9 +254,13 @@ class SerpControllerEnv(Node, Env):
         if len(data.collisions) > 0:
             self.collision = True
 
-    def processCollisions2(self, data):
+    def processObjectCollisions(self, data):
         if len(data.collisions) > 0:
-            self.object_current_action = self.object_actions[1]
+            object_new_position = self.object_start_position[self.obj_position]
+            self.move_model('object', object_new_position[0], object_new_position[1], object_new_position[2])
+            self.obj_position = 1 - self.obj_position
+            print(object_new_position)
+            
 
     # Run an entire episode manually for testing purposes
     # return true if succesful
@@ -297,16 +284,28 @@ class SerpControllerEnv(Node, Env):
         check_env(self)
         self.wait_lidar_reading()
 
-        alg = str(self._parameter_overrides['rl_alg']._value)
-        rl_alg = globals().get(alg)
+        sensor_type = get_robot_sensor_type(self)
 
-        if rl_alg == None:
+        rl_algorithm = str(self._parameter_overrides['rl_alg']._value)
+        rl_algorithm_function = globals().get(rl_algorithm)
+
+        if rl_algorithm_function == None:
             return
 
-        # Create the agent
-        #agent = rl_alg("MlpPolicy", self, verbose=1)
+        modal_path = str(self._parameter_overrides['modal_path']._value)
 
-        agent = PPO.load(f"src/ros2_flatland_rl_tutorial/ppo.zip", env=self)
+        if modal_path == None:
+            return
+        
+        agent = None
+
+        if modal_path == "":
+            # Create the agent
+            agent = rl_algorithm_function("MlpPolicy", self, verbose=1)
+            modal_path = f"src/ros2_flatland_rl_tutorial/modals/{rl_algorithm}_{sensor_type}"
+        else:
+            #Loading an agent
+            agent = PPO.load(modal_path, env=self)
 
         # Target accuracy
         min_accuracy = 0.8
@@ -339,10 +338,8 @@ class SerpControllerEnv(Node, Env):
             # Calculate the accuracy
             accuracy = successful_episodes/n_test_episodes
 
-            print('TRAINING> ', training_iterations)
-
             if training_iterations % 500 == 0 and training_iterations != 0:
-                agent.save(f"src/ros2_flatland_rl_tutorial/{alg.lower()}")
+                agent.save(modal_path)
 
             self.get_logger().info('Testing finished. Accuracy: ' + str(accuracy))
 
@@ -350,7 +347,37 @@ class SerpControllerEnv(Node, Env):
 
         self.get_logger().info('Training Finished. Training iterations: ' + str(training_iterations) + '  Accuracy: ' + str(accuracy))
 
-        agent.save(f"src/ros2_flatland_rl_tutorial/{alg.lower()}")
+        agent.save(modal_path)
+
+def setup_beacon_position(roboController):
+
+    with open(roboController._parameter_overrides['world_path']._value, 'r') as file:
+        data = yaml.load(file, Loader=yaml.FullLoader)
+
+    # Number of divisions of the LiDAR
+    if data['models'][0]['model'] == 'serp_sonar.model.yaml':
+        roboController.n_lidar_sections = 3
+
+    world_type = data['layers'][0]['map']
+
+    if world_type == 'turn.yaml':
+        data['models'][1]['pose'][2] = 3.14159265359
+    else:
+        data['models'][1]['pose'][2] = 4.71238898038
+
+    return tuple(data['models'][1]['pose'])
+
+
+def get_robot_sensor_type(roboController):
+
+    with open(roboController._parameter_overrides['world_path']._value, 'r') as file:
+        data = yaml.load(file, Loader=yaml.FullLoader)
+    
+    if data['models'][0]['model'] == 'serp_sonar.model.yaml':
+        return 'sonar'
+    
+    return 'lidar'
+
 
 def main(args = None):
     rclpy.init()
