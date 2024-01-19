@@ -307,6 +307,8 @@ class SerpControllerEnv(Node, Env):
             #Loading an agent
             agent = PPO.load(modal_path, env=self)
 
+        agent.save(modal_path)
+
         # Target accuracy
         min_accuracy = 0.8
         # Current accuracy
