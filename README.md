@@ -1,6 +1,6 @@
 # Flatland Reinforcement Learning Tutorial using ROS 2
 
-The [previous tutorial](https://github.com/FilipeAlmeidaFEUP/ros2_teleopkeys_tutorial) focused on explaining how to use ROS 2 and Flatland to create a robot and control it. In this tutorial you will learn how to use Reinforcement Learning (RL) inside the same setup to teach the robot how to perform a simple task. The packages used for the RL algorithms are the [Stable-Baselines3](https://stable-baselines3.readthedocs.io/en/master/) and OpenAI's [Gym](https://www.gymlibrary.dev/).
+The [previous tutorial](https://github.com/FilipeAlmeidaFEUP/ros2_flatland_rl_tutorial) focused on explaining how to use ROS 2 Flatland and RL algorithms to create a robot and tarin it to complete a course. In this tutorial you will learn how to use multiple Reinforcement Learning (RL) inside the same setup to see how the robot behaves with different policies. The packages used for the RL algorithms are the [Stable-Baselines3](https://stable-baselines3.readthedocs.io/en/master/) and OpenAI's [Gym](https://www.gymlibrary.dev/).
 
 ## First Run
 
