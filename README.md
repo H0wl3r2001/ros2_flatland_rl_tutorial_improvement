@@ -1,6 +1,6 @@
 # Flatland Reinforcement Learning Tutorial using ROS 2
 
-The [previous tutorial](https://github.com/FilipeAlmeidaFEUP/ros2_teleopkeys_tutorial) focused on explaining how to use ROS 2 and Flatland to create a robot and control it. In this tutorial you will learn how to use Reinforcement Learning (RL) inside the same setup to teach the robot how to perform a simple task. The packages used for the RL algorithms are the [Stable-Baselines3](https://stable-baselines3.readthedocs.io/en/master/) and OpenAI's [Gym](https://www.gymlibrary.dev/).
+The [previous tutorial](https://github.com/FilipeAlmeidaFEUP/ros2_flatland_rl_tutorial) focused on explaining how to use ROS 2 Flatland and RL algorithms to create a robot and tarin it to complete a course. In this tutorial you will learn how to use multiple Reinforcement Learning (RL) inside the same setup to see how the robot behaves with different policies. The packages used for the RL algorithms are the [Stable-Baselines3](https://stable-baselines3.readthedocs.io/en/master/) and OpenAI's [Gym](https://www.gymlibrary.dev/).
 
 ## First Run
 
@@ -35,15 +35,18 @@ At this point, if no errors occur, you should be seeing the following world:
 
 ![RL world](images/world.png)
 
-The robot is currently using the Proximal Policy Optimization (PPO) algorithm to learn how to navigate the hallway from one end to the other. In the begining, the robot is just exploring the environment and practically taking random actions. Over time, it starts to learn what to do in the different scenarios and it will improve at the task.
+The robot is by default using the Proximal Policy Optimization (PPO) algorithm to learn how to navigate the hallway from one end to the other. In the begining, the robot is just exploring the environment and practically taking random actions. Over time, it starts to learn what to do in the different scenarios and it will improve at the task. If you want to use other algorithm or another world, or even continue training a model, you can use the following arguments:
+
+```
+world_path:=<path_to_world_from_src_folder> rl_alg:=<algorithm_Acronym_as_it_is_in_StableBaselines3_documentation> model_path:=<path_to_model_from_src_folde>
+```
 
 The target area is represented by the green circle and, every time the task is restarted, the initial and final positions swap so the robot learns how to turn to both the left and the right. The task is restarted if it fails, if there are any collisions or it takes too much time or if it succeeds (reaches the end).
 
 These are all the components in the world and how they changed from the previous tutorial:
-- Map: now is a simpler layout, representing a hallway with a 90º turn. Same configuration with a different [image](world/turn.png).
-- SERP robot model with LiDAR: this model is exactly the same from before.
-- End Beacon: new model added to detect if the SERP robot reached the end. It's represented by a green circle and its body has no collision with any other component. 
-- End Beacon LiDAR: laser plugin inside the end beacon model that ignores walls and only detects the SERP robot. The smallest value read is the distance from the robot to the end and, if bellow a threshold, the target area was reached.
+- Map: With a more complex map representing an S [image](images/world2.png).
+- LiDAR-based Sonar: by modifying the angle, range, update rate, and noise standard deviation parameters, we were able to mimic Sonar behaviour into a LiDAR configuration file.
+- Movable objects in the environment: Beyond the typical obstacles, it was implemented moving barriers which may hinder the robot’s progress into the project’s environment. This was achieved by instantiating new robots with automatic moving scripts.
 
 NOTE: The layers were setup in order to accommodate for the necessary collisions and lasers. If you're having trouble understanding the logic, revisit this [Google Slides presentation on how to manage layers](https://docs.google.com/presentation/d/1KqJDQR_PBaGtS-kA5KgsTbaRThu_uP2U8NJeoSP0GDE/edit?usp=sharing). The last slide shows the layer graph for this world.
 
@@ -194,4 +197,10 @@ The goal is to make sure you end up with the agent capable of completing the tas
 
 ## Next steps
 
-Now that you know how both Flatland, ROS2 and RL can work together, you can now start developing your own projects and experimenting with different maps, setups or tasks.
+Given the upgrades done and the potential for more, one definitive upgrade is to implement even more complex moving objects to stress test the main actor's RL algorithm into possible new heights.
+
+Our computational capacity could have improved our ability to effectively test the various RL algorithms provided by the Stable Baselines3 package. 
+
+Therefore, another point could be to have a more capable machine in terms of processing capacities to train and test agents and evaluate them efficiently.
+
+Moreover, after making the previous updates, more complex maps could be implemented and used as training grounds.
