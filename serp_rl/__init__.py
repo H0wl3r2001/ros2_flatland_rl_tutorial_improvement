@@ -20,17 +20,22 @@ import math
 import yaml
 import time
 import threading
+import importlib
 
 import sys
+
+
 
 class SerpControllerEnv(Node, Env):
     def __init__(self) -> None:
         super().__init__("SerpControllerEnv")
 
+        sb3_import = importlib.import_module('stable_baselines3')
+        self.rl_algorithms = {'PPO': sb3_import.PPO, 'A2C': sb3_import.A2C }
+
         #Moovable objectt parameters
         self.object_action = (0.05, 0.0)
         self.object_start_position = [(1.4, 1.4, 1.57079632679), (1.4, 1.8, -1.57079632679)]
-
 
         # Predefined speed for the robot
         linear_speed = 0.5
@@ -44,7 +49,7 @@ class SerpControllerEnv(Node, Env):
         self.lidar_sample = []
         
         # Number of divisions of the LiDAR
-        self.n_lidar_sections = 9
+        self.n_lidar_sections = define_sensor_section_value(self)
 
         # How close the robot needs to be to the target to finish the task
         self.end_range = 0.2
@@ -102,7 +107,8 @@ class SerpControllerEnv(Node, Env):
 
         # action is an integer between 0 and 2 (total of 3 actions)
         self.action_space = Discrete(len(self.actions))
-        # state is represented by a numpy.Array with size 9 and values between 0 and 2
+
+        # state is represented by a numpy.Array with size 9 ou 2 and values between 0 and 2
         self.observation_space = Box(0, 2, shape=(self.n_lidar_sections,), dtype=np.float64)
 
         # ****************************************
@@ -259,7 +265,6 @@ class SerpControllerEnv(Node, Env):
             object_new_position = self.object_start_position[self.obj_position]
             self.move_model('object', object_new_position[0], object_new_position[1], object_new_position[2])
             self.obj_position = 1 - self.obj_position
-            print(object_new_position)
             
 
     # Run an entire episode manually for testing purposes
@@ -285,29 +290,30 @@ class SerpControllerEnv(Node, Env):
         self.wait_lidar_reading()
 
         sensor_type = get_robot_sensor_type(self)
-
         rl_algorithm = str(self._parameter_overrides['rl_alg']._value)
+
+        algorithm_module = self.rl_algorithms[rl_algorithm]
         rl_algorithm_function = globals().get(rl_algorithm)
 
         if rl_algorithm_function == None:
             return
+    
+        model_path = str(self._parameter_overrides['model_path']._value)
 
-        modal_path = str(self._parameter_overrides['modal_path']._value)
-
-        if modal_path == None:
+        if model_path == None:
             return
         
         agent = None
 
-        if modal_path == "":
+        if model_path == "":
             # Create the agent
             agent = rl_algorithm_function("MlpPolicy", self, verbose=1)
-            modal_path = f"src/ros2_flatland_rl_tutorial/modals/{rl_algorithm}_{sensor_type}"
+            model_path = f"src/ros2_flatland_rl_tutorial/models/{rl_algorithm}_{sensor_type}"
         else:
             #Loading an agent
-            agent = PPO.load(modal_path, env=self)
+            agent = algorithm_module.load(model_path, env=self)
 
-        agent.save(modal_path)
+        agent.save(model_path)
 
         # Target accuracy
         min_accuracy = 0.8
@@ -340,8 +346,8 @@ class SerpControllerEnv(Node, Env):
             # Calculate the accuracy
             accuracy = successful_episodes/n_test_episodes
 
-            if training_iterations % 500 == 0 and training_iterations != 0:
-                agent.save(modal_path)
+            if training_iterations % 200 == 0 and training_iterations != 0:
+                agent.save(model_path)
 
             self.get_logger().info('Testing finished. Accuracy: ' + str(accuracy))
 
@@ -349,16 +355,27 @@ class SerpControllerEnv(Node, Env):
 
         self.get_logger().info('Training Finished. Training iterations: ' + str(training_iterations) + '  Accuracy: ' + str(accuracy))
 
-        agent.save(modal_path)
+        agent.save(model_path)
 
-def setup_beacon_position(roboController):
+
+def define_sensor_section_value(roboController):
+
+    sections = 9
 
     with open(roboController._parameter_overrides['world_path']._value, 'r') as file:
         data = yaml.load(file, Loader=yaml.FullLoader)
 
     # Number of divisions of the LiDAR
     if data['models'][0]['model'] == 'serp_sonar.model.yaml':
-        roboController.n_lidar_sections = 3
+        sections = 1
+    
+    return sections
+        
+
+def setup_beacon_position(roboController):
+
+    with open(roboController._parameter_overrides['world_path']._value, 'r') as file:
+        data = yaml.load(file, Loader=yaml.FullLoader)
 
     world_type = data['layers'][0]['map']
 

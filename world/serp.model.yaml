@@ -61,7 +61,7 @@ plugins:
     pub_rate: 10
     twist_sub: cmd_vel
     odom_frame_id: odom
-    odom_pub: odom  # topic odom is published on
+    odom_pub: odom1  # topic odom is published on
   
   # needed for some visualization components
   - type: ModelTfPublisher
