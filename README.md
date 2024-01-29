@@ -16,7 +16,7 @@ If you are using the [VM provided](https://drive.google.com/file/d/1Wte7yGi9puJU
 
 Clone the repository to your `<ros2_workspace>/src` folder:
 ```
-git clone https://github.com/FilipeAlmeidaFEUP/ros2_flatland_rl_tutorial.git
+git clone https://github.com/H0wl3r2001/ros2_flatland_rl_tutorial_improvement
 ```
 
 Build the project and install dependencies:
