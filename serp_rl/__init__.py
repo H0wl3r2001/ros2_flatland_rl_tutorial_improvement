@@ -119,6 +119,7 @@ class SerpControllerEnv(Node, Env):
     # Resets the environment to an initial state
     def reset(self):
         # Make sure the robot is stopped
+
         self.change_speed(self.pub, 0.0, 0.0)
         self.change_speed(self.obj_pub, 0.0, 0.0)
 
@@ -156,11 +157,11 @@ class SerpControllerEnv(Node, Env):
     def step(self, action): 
 
         # **** Performs the action and waits for it to be completed ****
-        self.change_speed(self.pub, self.actions[action][0], self.actions[action][1])
+        self.change_robot_speeds(self.pub, self.actions[action][0], self.actions[action][1])
 
         self.lidar_sample = []
         self.wait_lidar_reading()
-        self.change_speed(self.pub, 0.0, 0.0)
+        self.change_robot_speeds(self.pub, 0.0, 0.0)
         # **************************************************************
 
         # **** Move Object ****
@@ -213,7 +214,7 @@ class SerpControllerEnv(Node, Env):
         self.total_episode_cnt = 0
 
     # Change the speed of the robot
-    def change_speed(self, publisher, linear, angular):
+    def change_robot_speeds(self, publisher, linear, angular):
         twist_msg = Twist()
         twist_msg.linear.x = linear
         twist_msg.angular.z = angular
