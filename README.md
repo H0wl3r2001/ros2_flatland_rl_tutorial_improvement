@@ -10,7 +10,7 @@ All the prerequisites are carried over from the previous tutorial. In addition, 
 
 The Stable-Baselines3 installation should automatically install all missing dependencies, including the Gym package. Nevertheless, pay attention during the installation and make sure there were no errors. If any dependency fails to install try to do it manually.
 
-If you are using the [VM provided](https://drive.google.com/file/d/1Wte7yGi9puJU5gR8mpzAtvtKOPtoYKEJ/view?usp=sharing), the package is ready to run.
+If you are using the [VM provided](https://drive.google.com/file/d/1jQtTYx1BroCyFhU8fhgCjj6IWB0KBh7Y/view?usp=sharing), the package is ready to run.
 
 ### Running the code
 
