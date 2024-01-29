@@ -212,6 +212,12 @@ class SerpControllerEnv(Node, Env):
     def reset_counters(self):
         self.total_step_cnt = 0
         self.total_episode_cnt = 0
+    
+    def change_speed(self, publisher, linear, angular):
+        twist_msg = Twist()
+        twist_msg.linear.x = linear
+        twist_msg.angular.z = angular
+        publisher.publish(twist_msg)
 
     # Change the speed of the robot
     def change_robot_speeds(self, publisher, linear, angular):
